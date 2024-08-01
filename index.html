@@ -1,28 +1,55 @@
-<html>
-    <head>
-        <title>You can't leave this page 2</title>
-    </head>
-    <h1>You can't leave this page</h1>
-    <p>Try to use the browser back button/keyboard sequence to navigate to the previous page you were on:</p>
-    <ul>
-        <li><kbd>COMMAND</kbd>-<kbd>[</kbd> (to navigate back)</li>
-        <li>Back button-<kbd>[</kbd> (to navigate back)</li>
-        <li>Mouse click 4-<kbd>[</kbd> (to navigate back)</li>
-    </ul>
-    <p>I have blocked all of them</p>
-    <hr>
-    <p>Affected browsers:</p>
-    <ul>
-        <li>Firefox (which versions?)</li>
-    </ul>
-    <script>      
-        window.onpopstate = function(event) {
-            if (!window.location.search.includes('locked')) {
-                window.location.assign(window.location.pathname + '?locked');
-            }
-        };
-        if (!window.location.search.includes('locked')) {
-            window.location.assign(window.location.pathname + '?locked');
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      lang="en-us"
+      content="This is a test case for the experiment."
+    />
+    <title>Test case</title>
+    <link rel="shortcut icon" href="/favicon.gif" />
+    <link
+      rel="canonical"
+      href="/"
+    />
+    <script>
+      const experimentId = 'A21F7224-CB8B-41E0-9AD8-B26A1D86548D';
+      const targets = ['/variant1.html', '/variant2.html'];
+
+      async function redirectToTarget() {
+        // Retrieve or set the bucket value (random 0-99) for this visitor
+        let bucket = localStorage.getItem('bucket');
+        if (!bucket) {
+            bucket = Math.floor(Math.random() * 100);
+            localStorage.setItem('bucket', bucket);
         }
+
+        // Hash the experiment ID and bucket value reproducibly into a random number
+        const encoder = new TextEncoder();
+        const data = encoder.encode(experimentId + bucket);
+        const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+        const randomNumber = new DataView(hashBuffer).getUint32(0, true);
+
+        // Select a target
+        const target = targets[randomNumber % targets.length];
+
+        // Redirect the visitor to the target
+        window.location.assign(target);
+      }
+      redirectToTarget();
     </script>
+  </head>
+  <body>
+    <noscript>
+      <h1>We're conducting an experiment.</h1>
+      <p>Please click on one of the URLs below to continue:</p>
+      <ul>
+        <li><a href="/variant1.html">Home 1</a></li>
+        <li><a href="/variant2.html">Home 2</a></li>
+      </ul>
+    </noscript>
+  </body>
 </html>
