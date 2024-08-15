@@ -1,55 +1,16 @@
 <!DOCTYPE html>
-<html lang="en-US">
+<html>
   <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta
-      name="description"
-      lang="en-us"
-      content="This is a test case for the experiment."
-    />
-    <title>Test case</title>
-    <link rel="shortcut icon" href="/favicon.gif" />
-    <link
-      rel="canonical"
-      href="/"
-    />
     <script>
-      const experimentId = 'A21F7224-CB8B-41E0-9AD8-B26A1D86548D';
-      const targets = ['/variant1.html', '/variant2.html'];
-
       async function redirectToTarget() {
-        // Retrieve or set the bucket value (random 0-99) for this visitor
-        let bucket = localStorage.getItem('bucket');
-        if (!bucket) {
-            bucket = Math.floor(Math.random() * 100);
-            localStorage.setItem('bucket', bucket);
-        }
-
-        // Hash the experiment ID and bucket value reproducibly into a random number
         const encoder = new TextEncoder();
-        const data = encoder.encode(experimentId + bucket);
+        const data = encoder.encode(2);
         const hashBuffer = await crypto.subtle.digest('SHA-256', data);
         const randomNumber = new DataView(hashBuffer).getUint32(0, true);
-
-        // Select a target
-        const target = targets[randomNumber % targets.length];
-
-        // Redirect the visitor to the target
+        const target = '/variant1.html';
         window.location.assign(target);
       }
       redirectToTarget();
     </script>
   </head>
-  <body>
-    <noscript>
-      <h1>We're conducting an experiment.</h1>
-      <p>Please click on one of the URLs below to continue:</p>
-      <ul>
-        <li><a href="/variant1.html">Home 1</a></li>
-        <li><a href="/variant2.html">Home 2</a></li>
-      </ul>
-    </noscript>
-  </body>
 </html>
