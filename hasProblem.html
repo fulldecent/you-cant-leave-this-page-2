@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script>
+      async function redirectToTarget() {
+        await new Promise(resolve => setTimeout(resolve, 10));
+        window.location.assign('/variant1.html');
+      }
+      redirectToTarget();
+    </script>
+  </head>
+</html>
