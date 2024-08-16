@@ -10,3 +10,7 @@ See it in action https://youtu.be/C38e89xqxs0
 ## Affected browsers
 
 Firefox 129.0.1 64-bit on macOS and possibly more.
+
+## Bug report
+
+https://bugzilla.mozilla.org/show_bug.cgi?id=1913514
