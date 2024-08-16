@@ -15,14 +15,13 @@
     <ul>
         <li>Firefox (which versions?)</li>
     </ul>
-    <script>      
-        window.onpopstate = function(event) {
+    <script>
+        async function redirect() {
             if (!window.location.search.includes('locked')) {
-                window.location.assign(window.location.pathname + '?locked');
+                const url = await Promise.resolve(window.location.pathname + '?locked');
+                window.location.assign(url);
             }
-        };
-        if (!window.location.search.includes('locked')) {
-            window.location.assign(window.location.pathname + '?locked');
         }
+        redirect();
     </script>
 </html>
