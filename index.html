@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
     <head>
         <title>You can't leave this page 2</title>
@@ -13,15 +14,14 @@
     <hr>
     <p>Affected browsers:</p>
     <ul>
-        <li>Firefox (which versions?)</li>
+        <li>Firefox (macOS / 129.0.1 64-bit)</li>
     </ul>
     <script>
-        async function redirect() {
-            if (!window.location.search.includes('locked')) {
-                const url = await Promise.resolve(window.location.pathname + '?locked');
-                window.location.assign(url);
-            }
-        }
-        redirect();
+        //(async()=>{location.search.includes('x')|| (await crypto.subtle.digest("SHA-256", new Uint8Array()),location.assign('?x'))})();
+        //location.search.includes('x')||crypto.subtle.digest("SHA-256",new Uint8Array()).then(()=>location.assign('?x'));
+        //location.search||crypto.subtle.digest("SHA-1",Int8Array.of()).then(()=>location.href='?x');
+        //location.search||fetch('/').then(()=>location.href='?x');
+        //location.search||fetch('').then(a=>location='?x');
+        location.search||fetch(0).then(a=>location='?x');
     </script>
 </html>
